@@ -5,14 +5,11 @@ This repository demonstrates how to run the classic `jaffle_shop` dbt project ag
 ### Prerequisites
 - Exasol database credentials with permissions to create and modify objects in your target schema.
 - Python 3.10 or newer available on your machine.
-- The ability to install command-line tools (curl, tar) and VS Code.
+- The ability to install command-line tools and VS Code.
 
 ### 1. Install Visual Studio Code
 - Download Visual Studio Code from <https://code.visualstudio.com/>.
 - Launch VS Code and open this project (`File` → `Open Folder…`).
-- Optional extensions that pair well with dbt:
-  - `innoverio.vscode-dbt-power-user` (dbt navigator)
-  - `bungcip.better-toml` (helps edit `profiles.yml`)
 
 ### 2. Install uv
 [`uv`](https://docs.astral.sh/uv/latest/) is a fast Python packaging and virtual environment manager that will isolate your dbt dependencies.
@@ -87,15 +84,13 @@ jaffle_shop:
 Once the profile is in place, validate connectivity:
 
 ```bash
-dbt debug --target dev
+dbt debug
 ```
 
 ### 7. Run dbt against Exasol
 
 ```bash
-dbt deps    # install dbt packages (if any)
-dbt seed    # optional: load sample CSVs
-dbt build   # run models, tests, snapshots as defined
+dbt build   # run models, tests, seeds, snapshots as defined
 ```
 
 You can also execute individual commands such as `dbt run` or `dbt test`.
