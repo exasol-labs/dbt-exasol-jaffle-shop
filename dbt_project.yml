@@ -14,10 +14,10 @@ macro-paths: ["macros"]
 target-path: "target"
 clean-targets:
     - "target"
-    - "dbt_modules"
+    - "dbt_packages"
     - "logs"
 
-require-dbt-version: [">=1.0.0", "<2.0.0"]
+require-dbt-version: [">=1.8.0", "<2.0.0"]
 
 flags:
   send_anonymous_usage_stats: false
