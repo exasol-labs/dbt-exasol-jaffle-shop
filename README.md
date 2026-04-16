@@ -1,6 +1,6 @@
 ## dbt-exasol-jaffle-shop
 
-This repository demonstrates how to run the classic `jaffle_shop` dbt project against an Exasol database. It walks through the full beginner workflow—from setting up tooling, creating an isolated Python environment with `uv`, installing the custom [`dbt-exasol`](https://github.com/mikhail-zhadanov/dbt-exasol) adapter, configuring `profiles.yml`, and finally running dbt commands.
+This repository demonstrates how to run the classic `jaffle_shop` dbt project against an Exasol database. It walks through the full beginner workflow: setting up tooling, creating an isolated Python environment with `uv`, installing the [`dbt-exasol`](https://pypi.org/project/dbt-exasol/) adapter, configuring `profiles.yml`, and running dbt commands.
 
 ### Prerequisites
 - Exasol database credentials with permissions to create and modify objects in your target schema.
@@ -30,7 +30,7 @@ Restart your shell so that the `uv` command is on your `PATH`.
 ### 3. Clone and enter this project
 
 ```bash
-git clone https://github.com/mikhail-zhadanov/dbt-exasol-jaffle-shop.git
+git clone https://github.com/exasol-labs/dbt-exasol-jaffle-shop.git
 cd dbt-exasol-jaffle-shop
 ```
 
@@ -48,10 +48,10 @@ source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
 ### 5. Install dbt for Exasol
 
 ```bash
-uv pip install git+https://github.com/mikhail-zhadanov/dbt-exasol.git
+uv pip install dbt-exasol
 ```
 
-This installs the latest `dbt-exasol` adapter directly from GitHub (and pulls in `dbt-core` automatically).
+This installs the `dbt-exasol` adapter from PyPI (and pulls in `dbt-core` automatically).
 
 ### 6. Configure `profiles.yml`
 
@@ -70,16 +70,17 @@ jaffle_shop:
   outputs:
     dev:
       type: exasol
-      threads: 4                      # adjust for your workload
-      dsn: localhost/nocertcheck:8563 # host[:options]:port
+      threads: 4                             # adjust for your workload
+      dsn: localhost:8563                    # host:port
       user: sys
       password: exasol
-      schema: dbt                     # target schema in Exasol
-      database: exasol                # optional: logical database name
+      schema: jaffle_shop                    # target schema in Exasol
+      database: exasol                       # logical database name
+      validate_server_certificate: false     # set true for trusted certificates
 ```
 
-- `dsn` follows Exasol's DSN convention. Remove `/nocertcheck` if you use trusted certificates.
-- Always keep secrets (user, password) secure—avoid committing them to version control.
+- Set `validate_server_certificate: true` (the default) when connecting to an Exasol cluster with trusted certificates.
+- Always keep secrets (user, password) secure, and avoid committing them to version control.
 
 Once the profile is in place, validate connectivity:
 
